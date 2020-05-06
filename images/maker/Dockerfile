@@ -31,6 +31,10 @@ RUN curl --silent --location \
     --output /out/usr/local/bin/docker-buildx \
     && chmod +x /out/usr/local/bin/docker-buildx
 
+RUN mkdir -p /out/etc/docker/cli-plugins \
+    && echo '{ "experimental": "enabled" }' > /out/etc/docker/config.json \
+    && ln -fs /usr/local/bin/docker-buildx /out/etc/docker/cli-plugins
+
 FROM scratch
-ENV DOCKER_CLI_EXPERIMENTAL=enabled
+ENV DOCKER_CONFIG=/etc/docker
 COPY --from=builder /out /
