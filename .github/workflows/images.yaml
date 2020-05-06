@@ -9,17 +9,17 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
+      - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
         name: Register binfmt
         with:
           entrypoint: docker
           args: run --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 
-      - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
+      - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
         name: Run make build-maker-image
         with:
           entrypoint: make
           args: build-maker-image
-      - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
+      - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
         name: Run make build-example-app-image
         with:
           entrypoint: make
