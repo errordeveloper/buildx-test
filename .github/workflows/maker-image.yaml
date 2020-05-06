@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
-      - uses: docker://errordeveloper/maker:16e84f2c0dcfb9b0f967316195ce36b7f5c67e0c
+      - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
         name: Run make push-maker-image
         with:
           entrypoint: make
