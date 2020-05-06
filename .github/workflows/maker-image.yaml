@@ -1,0 +1,16 @@
+name: Update Maker Image
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: Test & Build
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://errordeveloper/maker:7116cf9e5e42056f71a1731c81a11ce1bc11bed8
+        name: Run make push-maker-image
+        with:
+          entrypoint: make
+          args: push-maker-image
