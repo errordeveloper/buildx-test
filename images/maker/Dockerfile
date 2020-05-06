@@ -27,7 +27,7 @@ COPY --from=docker-dist /usr/local/bin /out/usr/local/bin
 COPY --from=qemu-dist /usr/bin/qemu-aarch64-static /out/usr/local/bin/qemu-aarch64-static
 
 RUN curl --silent --location \
-      https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v{BUILDX_VERSION}.linux-amd64 \
+      https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-amd64 \
     --output /out/usr/local/bin/docker-buildx \
     && chmod +x /out/usr/local/bin/docker-buildx
 
