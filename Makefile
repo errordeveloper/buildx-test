@@ -12,3 +12,14 @@ update-maker-image:
 	for i in .github/workflows/*.yaml ; do \
           sed "s|\($(MAKER_IMAGE_NAME)\):.*$$|\1:$(MAKER_IMAGE_TAG)|" "$${i}" > "$${i}.sedtmp" && mv "$${i}.sedtmp" "$${i}" ; \
         done
+
+.buildx_builder:
+	docker buildx create --platform linux/amd64,linux/arm64 > $@
+
+build-example-app-image: .buildx_builder
+	docker buildx build \
+	  --builder "$$(cat .buildx_builder)" \
+	  --output "type=image,push=false" \
+	  images/example-app
+	docker buildx rm "$$(cat .buildx_builder)"
+	rm -f .buildx_builder
