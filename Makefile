@@ -18,6 +18,7 @@ update-maker-image:
 
 build-example-app-image: .buildx_builder
 	docker buildx build \
+	  --platform linux/amd64,linux/arm64 \
 	  --builder "$$(cat .buildx_builder)" \
 	  --output "type=image,push=false" \
 	  images/example-app
