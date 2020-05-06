@@ -10,6 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
+        name: Register binfmt
+        with:
+          entrypoint: docker
+          args: run --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 
+      - uses: docker://errordeveloper/maker:90f30358957a754eca5e0cd8e1edb561de18e530
         name: Run make build-maker-image
         with:
           entrypoint: make
