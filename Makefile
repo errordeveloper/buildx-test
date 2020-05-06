@@ -1,8 +1,14 @@
 MAKER_IMAGE_NAME := errordeveloper/maker
 MAKER_IMAGE_TAG := $(shell images/make-image-tag.sh images/maker)
+MAKER_IMAGE := $(MAKER_IMAGE_NAME):$(MAKER_IMAGE_TAG)
 
 build-maker-image:
-	docker buildx build --tag $(MAKER_IMAGE_NAME):$(MAKER_IMAGE_TAG) images/maker
+	docker buildx build --tag $(MAKER_IMAGE) images/maker
 
 push-maker-image: build-maker-image
-	docker image push $(MAKER_IMAGE_NAME):$(MAKER_IMAGE_TAG)
+	docker image push $(MAKER_IMAGE)
+
+update-maker-image:
+	for i in .github/workflows/*.yaml ; do \
+          sed "s|\($(MAKER_IMAGE_NAME)\):.*$$|\1:$(MAKER_IMAGE_TAG)|" "$${i}" > "$${i}.sedtmp" && mv "$${i}.sedtmp" "$${i}" ; \
+        done
