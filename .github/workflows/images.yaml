@@ -13,7 +13,7 @@ jobs:
         name: Register binfmt
         with:
           entrypoint: docker
-          args: run --privileged docker/binfmt:a7996909642ee92942dcd6cff44b9b95f08dad64 
+          args: run --privileged linuxkit/binfmt:5d33e7346e79f9c13a73c6952669e47a53b063d4 
       - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
         name: Run make build-maker-image
         with:
