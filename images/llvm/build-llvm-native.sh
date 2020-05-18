@@ -8,18 +8,16 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
-git clone --branch llvmorg-10.0.0 https://github.com/llvm/llvm-project.git --reference /src/llvm.git /src/llvm
+mkdir -p /src/llvm/llvm/build-native/install
 
-mkdir -p /src/llvm/llvm/build/install
-
-cd /src/llvm/llvm/build
+cd /src/llvm/llvm/build-native
 
 cmake .. -G "Ninja" \
   -DLLVM_TARGETS_TO_BUILD="BPF" \
   -DLLVM_ENABLE_PROJECTS="clang" \
-  -DBUILD_SHARED_LIBS=OFF \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DLLVM_BUILD_RUNTIME=OFF
+  -DBUILD_SHARED_LIBS="OFF" \
+  -DCMAKE_BUILD_TYPE="Release" \
+  -DLLVM_BUILD_RUNTIME="OFF"
 
 ninja clang llc
 
