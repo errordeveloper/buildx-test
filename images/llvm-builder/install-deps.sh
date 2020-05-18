@@ -16,6 +16,8 @@ packages=(
   git
   ninja-build
   python3
+  gcc-aarch64-linux-gnu
+  g++-aarch64-linux-gnu
 )
 
 apt-get update
