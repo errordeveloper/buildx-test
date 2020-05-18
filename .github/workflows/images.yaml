@@ -20,6 +20,11 @@ jobs:
           entrypoint: make
           args: build-maker-image
       - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
+        name: Run make build-llvm-image
+        with:
+          entrypoint: make
+          args: build-llvm-image
+      - uses: docker://errordeveloper/maker:ac7914d6347396e6f3277e86627850155a9132ad
         name: Run make build-example-app-image
         with:
           entrypoint: make
