@@ -13,6 +13,17 @@ update-maker-image:
           sed "s|\($(MAKER_IMAGE_NAME)\):.*$$|\1:$(MAKER_IMAGE_TAG)|" "$${i}" > "$${i}.sedtmp" && mv "$${i}.sedtmp" "$${i}" ; \
         done
 
+
+LLVM_BUILDER_IMAGE_NAME := errordeveloper/llvm-builder
+LLVM_BUILDER_IMAGE_TAG := $(shell images/make-image-tag.sh images/llvm-builder)
+LLVM_BUILDER_IMAGE := $(LLVM_BUILDER_IMAGE_NAME):$(LLVM_BUILDER_IMAGE_TAG)
+
+build-llvm-builder-image:
+	docker buildx build --tag $(LLVM_BUILDER_IMAGE) images/llvm-builder
+
+push-llvm-builder-image: build-llvm-builder-image
+	docker image push $(LLVM_BUILDER_IMAGE)
+
 .buildx_builder:
 	docker buildx create --platform linux/amd64,linux/arm64 > $@
 
