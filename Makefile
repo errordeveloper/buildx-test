@@ -36,8 +36,6 @@ llvm-builder-image: .buildx_builder
 	  --tag $(LLVM_BUILDER_IMAGE) \
 	  --output $(OUTPUT) \
 	    images/llvm-builder
-	docker buildx rm "$$(cat .buildx_builder)"
-	rm -f .buildx_builder
 
 LLVM_IMAGE_NAME := errordeveloper/llvm
 LLVM_IMAGE_TAG := $(shell images/make-image-tag.sh images/llvm)
@@ -50,8 +48,6 @@ llvm-image: .buildx_builder
 	  --tag $(LLVM_IMAGE) \
 	  --output $(OUTPUT) \
 	    images/llvm
-	docker buildx rm "$$(cat .buildx_builder)"
-	rm -f .buildx_builder
 
 example-app-image: .buildx_builder
 	docker buildx build \
