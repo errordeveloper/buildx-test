@@ -14,8 +14,6 @@ maker-image: .buildx_builder
 	  --tag $(MAKER_IMAGE) \
 	  --output "type=registry,push=$(PUSH)" \
 	    images/maker
-	docker buildx rm "$$(cat .buildx_builder)"
-	rm -f .buildx_builder
 
 update-maker-image:
 	for i in .github/workflows/*.yaml ; do \
@@ -40,7 +38,7 @@ LLVM_IMAGE_NAME := errordeveloper/llvm
 LLVM_IMAGE_TAG := $(shell images/make-image-tag.sh images/llvm)
 LLVM_IMAGE := $(LLVM_IMAGE_NAME):$(LLVM_IMAGE_TAG)
 
-llvm-image:
+llvm-image: .buildx_builder
 	docker buildx build \
 	  --platform linux/amd64 \
 	  --builder "$$(cat .buildx_builder)" \
@@ -56,5 +54,3 @@ example-app-image: .buildx_builder
 	  --builder "$$(cat .buildx_builder)" \
 	  --output "type=registry,push=$(PUSH)" \
 	    images/example-app
-	docker buildx rm "$$(cat .buildx_builder)"
-	rm -f .buildx_builder
