@@ -5,6 +5,8 @@ ifeq ($(PUSH),true)
 OUTPUT := "type=registry,push=true"
 endif
 
+.PHONY: .buildx_builder
+
 .buildx_builder:
 	docker buildx create --platform linux/amd64,linux/arm64 > $@
 
