@@ -1,5 +1,10 @@
 PUSH ?= false
 
+OUTPUT := "type=docker"
+ifeq ($(PUSH),true)
+OUTPUT := "type=registry,push=true"
+endif
+
 .buildx_builder:
 	docker buildx create --platform linux/amd64,linux/arm64 > $@
 
@@ -12,7 +17,7 @@ maker-image: .buildx_builder
 	  --platform linux/amd64 \
 	  --builder "$$(cat .buildx_builder)" \
 	  --tag $(MAKER_IMAGE) \
-	  --output "type=registry,push=$(PUSH)" \
+	  --output $(OUTPUT) \
 	    images/maker
 
 update-maker-image:
@@ -29,7 +34,7 @@ llvm-builder-image: .buildx_builder
 	  --platform linux/amd64 \
 	  --builder "$$(cat .buildx_builder)" \
 	  --tag $(LLVM_BUILDER_IMAGE) \
-	  --output "type=registry,push=$(PUSH)" \
+	  --output $(OUTPUT) \
 	    images/llvm-builder
 	docker buildx rm "$$(cat .buildx_builder)"
 	rm -f .buildx_builder
@@ -43,7 +48,7 @@ llvm-image: .buildx_builder
 	  --platform linux/amd64 \
 	  --builder "$$(cat .buildx_builder)" \
 	  --tag $(LLVM_IMAGE) \
-	  --output "type=registry,push=$(PUSH)" \
+	  --output $(OUTPUT) \
 	    images/llvm
 	docker buildx rm "$$(cat .buildx_builder)"
 	rm -f .buildx_builder
@@ -52,5 +57,5 @@ example-app-image: .buildx_builder
 	docker buildx build \
 	  --platform linux/amd64,linux/arm64 \
 	  --builder "$$(cat .buildx_builder)" \
-	  --output "type=registry,push=$(PUSH)" \
+	  --output $(OUTPUT) \
 	    images/example-app
